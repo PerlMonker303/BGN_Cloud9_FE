@@ -76,7 +76,7 @@ const Home = () => {
     const renderPDF = (url) => <object data={url} type="application/pdf" width="100%" height="100%" />
 
     const videoOptions = {
-        height: '390',
+        height: '490',
         width: '640',
         playerVars: {
             autoplay: 1,
@@ -102,17 +102,19 @@ const Home = () => {
 
                 <Grid item xs={12} md={4}>
                     <CustomContainer className={classes.paper} isHidden={!description}>
-                        <Typography>Description</Typography>
-                        {description}
+                        <Typography variant="h6">Description</Typography>
+                        <p style={{  textOverflow:'ellipsis'}}>
+                            {description}
+                        </p>
                     </CustomContainer>
 
                     <CustomContainer elevation={3} p={12} isHidden={!relatedTopicsList.length}>
-                        <Typography>Related topics</Typography>
+                        <Typography variant="h6">Related topics</Typography>
                         <RelatedTopics relatedTopicsList={relatedTopicsList} setClicked={handleTopicClicked} />
                     </CustomContainer>
 
                     <CustomContainer isHidden={isInitialPage}>
-                        <Typography>Images</Typography>
+                        <Typography variant="h6">Images</Typography>
                         <Images imagesList={imagesList} setClicked={handleImageClicked} />
                     </CustomContainer>
                 </Grid>
@@ -120,7 +122,7 @@ const Home = () => {
                 <Grid item xs={12} md={4}>
 
                     <CustomContainer isHidden={isInitialPage}>
-                        <Typography>Articles</Typography>
+                        <Typography variant="h6">Articles</Typography>
                         <Articles articlesList={articlesList} setClicked={handleArticleClicked} />
                     </CustomContainer>
                 </Grid>
@@ -129,7 +131,7 @@ const Home = () => {
 
 
                     <CustomContainer isHidden={isInitialPage}>
-                        <Typography>Videos</Typography>
+                        <Typography variant="h6" >Videos</Typography>
                         <Videos videosList={videosList} setClicked={handleVideoClicked} />
                     </CustomContainer>
                 </Grid>

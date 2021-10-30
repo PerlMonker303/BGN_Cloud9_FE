@@ -12,7 +12,7 @@ const Video = ({ video, idx, setClicked }) => {
         <Box className={classes.box}>
             <Link className={classes.title} onClick={handleOnClick}>{video.snippet.title}</Link>
             <Box className={classes.thumbnail}>
-                <img src={video.snippet.thumbnails.standard.url} alt='thumbnail' width='350px' onClick={setClicked} />
+                <img src={video.snippet.thumbnails.standard.url} alt='thumbnail' width='100%' onClick={setClicked} />
             </Box>
         </Box>
     )

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const axiosInstance = axios.create({ baseURL: "http://localhost:5000/" });
+const axiosInstance = axios.create({ baseURL: "http://localhost:8000/" });
 const YOUTUBE_PLAYLIST_ITEMS_API = 'https://www.googleapis.com/youtube/v3/playlistItems';
 
 export const getDescriptionApi = (keyword) => {
