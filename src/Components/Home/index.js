@@ -1,27 +1,26 @@
 import React, { useState } from 'react'
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
 import { useStyles } from "./styles";
 import { Button, Grid } from '@mui/material';
 import CustomModal from '../CustomModal';
 import YouTube from 'react-youtube';
 import CustomContainer from '../CustomContainer';
-import { getDescriptionApi, getPlaylistApi } from '../../api';
+import { getDescriptionApi, getPlaylistApi, getRelatedTopicsApi } from '../../api';
+import RelatedTopics from '../RelatedTopics';
+import { Typography } from '@material-ui/core';
 
 const Home = () => {
     const classes = useStyles();
     const [keyword, setKeyword] = useState("");
     const [description, setDescription] = useState('');
+    const [relatedTopicsList, setRelatedTopicsList] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalVideoOpen, setIsModalVideoOpen] = useState(false);
 
-    const handleTextChanged = (e) => {
-        setKeyword(e.target.value);
-    }
-
     const handleButtonClicked = async () => {
         const desc = await getDescriptionApi(keyword);
-        console.log(desc);
+        setDescription(desc);
+        const relTopics = await getRelatedTopicsApi(keyword);
+        setRelatedTopicsList(relTopics);
 
         // also test the youtube api
         const youtubeData = await getPlaylistApi("PLAE36CEFE9200FDDD");
@@ -37,6 +36,12 @@ const Home = () => {
 
     const handleModalVideoClicked = () => {
         setIsModalVideoOpen(true);
+    }
+
+    const handleTopicClicked = (topic) => {
+        console.log(topic);
+        setKeyword(topic);
+        handleButtonClicked();
     }
 
     const renderPDF = (url) => <object data={url} type="application/pdf" width="100%" height="100%" />
@@ -65,14 +70,6 @@ const Home = () => {
                 spacing="6"
             >
                 <Grid item>
-                    <Typography className={classes.title}>
-                        Enter a keyword
-                    </Typography>
-                </Grid>
-                <Grid item>
-                    <TextField label="ex: Photosynthesis" variant="outlined" onChange={handleTextChanged} />
-                </Grid>
-                <Grid item>
                     <Button onClick={handleButtonClicked}>Search</Button>
                 </Grid>
                 <Grid item>
@@ -100,6 +97,12 @@ const Home = () => {
                             </CustomContainer>
                         </Grid>
                     </Grid>
+                </Grid>
+                <Grid item>
+                    <CustomContainer>
+                        <Typography>Related topics</Typography>
+                        <RelatedTopics relatedTopicsList={relatedTopicsList} setClicked={handleTopicClicked} />
+                    </CustomContainer>
                 </Grid>
             </Grid >
 
