@@ -1,22 +1,18 @@
 import React, { useState } from 'react'
-// import { useStyles } from "./styles";
+import { useStyles } from "./styles";
 import { Button, Grid } from '@mui/material';
 import CustomModal from '../CustomModal';
 import YouTube from 'react-youtube';
 import CustomContainer from '../CustomContainer';
-import { getArticlesApi, getDescriptionApi, getPlaylistApi, getRelatedTopicsApi } from '../../api';
+import { getArticlesApi, getDescriptionApi, getImagesApi, getPlaylistApi, getRelatedTopicsApi } from '../../api';
 import RelatedTopics from '../RelatedTopics';
 import { makeStyles, Paper, Typography } from '@material-ui/core';
 import SearchBar from '../SearchBar'
 import Articles from '../Articles';
+import Images from '../Images';
+import Image from '../Images/Image';
 import Header from '../Header/Header';
 
-const useStyles = makeStyles(theme => ({
-    paper: {
-        margin: 'auto',
-        padding: '12px',
-    }
-}));
 
 const Home = () => {
     const classes = useStyles();
@@ -24,9 +20,12 @@ const Home = () => {
     const [description, setDescription] = useState('');
     const [relatedTopicsList, setRelatedTopicsList] = useState([]);
     const [articlesList, setArticlesList] = useState([]);
-    const [selectedArticle, setSelectedArticle] = useState('');
+    const [imagesList, setImagesList] = useState([]);
+    const [selectedArticle, setSelectedArticle] = useState(null);
+    const [selectedImage, setSelectedImage] = useState(null);
     const [isModalArticleOpen, setIsModalArticleOpen] = useState(false);
     const [isModalVideoOpen, setIsModalVideoOpen] = useState(false);
+    const [isModalImageOpen, setIsModalImageOpen] = useState(false);
 
     const handleButtonClicked = async () => {
         const desc = await getDescriptionApi(keyword);
@@ -35,6 +34,8 @@ const Home = () => {
         setRelatedTopicsList(relTopics);
         const art = await getArticlesApi(keyword);
         setArticlesList(art);
+        const images = await getImagesApi(keyword);
+        setImagesList(images);
 
         // also test the youtube api
         const youtubeData = await getPlaylistApi("PLAE36CEFE9200FDDD");
@@ -57,6 +58,13 @@ const Home = () => {
     const handleArticleClicked = (article) => {
         setSelectedArticle(article)
         setIsModalArticleOpen(true);
+    }
+
+    const handleImageClicked = (image) => {
+        console.log(image);
+        setSelectedImage(image)
+        setIsModalImageOpen(true);
+        console.log(selectedImage);
     }
 
     const renderPDF = (url) => <object data={url} type="application/pdf" width="100%" height="100%" />
@@ -122,16 +130,24 @@ const Home = () => {
                         {dummy_metabolism}
                     </CustomContainer>
 
+                    <CustomContainer isHidden={!imagesList.length}>
+                        <Typography>Images</Typography>
+                        <Images imagesList={imagesList} setClicked={handleImageClicked} />
+                    </CustomContainer>
+
                     {/* <Thumbnail/> */}
                 </Grid>
                 
             </Grid>
 
             <CustomModal isOpen={isModalArticleOpen} setIsOpen={setIsModalArticleOpen}>
-                {renderPDF(selectedArticle.url)}
+                {selectedArticle && renderPDF(selectedArticle.url)}
             </CustomModal>
             <CustomModal isOpen={isModalVideoOpen} setIsOpen={setIsModalVideoOpen}>
                 <YouTube videoId="VLy6j3j95Ac" opts={videoOptions} />
+            </CustomModal>
+            <CustomModal isOpen={isModalImageOpen} setIsOpen={setIsModalImageOpen} resizeAsChild>
+                {selectedImage && <Image image={selectedImage} />}
             </CustomModal>
         </>
     )

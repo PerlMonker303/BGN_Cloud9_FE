@@ -5,6 +5,7 @@ const CustomModal = ({
     isOpen,
     setIsOpen,
     children,
+    resizeAsChild = false
 }) => {
     const classes = useStyles();
 
@@ -14,7 +15,7 @@ const CustomModal = ({
 
     return (
         <Modal onClose={handleClose} open={isOpen} className={classes.modal}>
-            <Paper className={classes.paper}>
+            <Paper className={resizeAsChild ? classes.paperAsChild : classes.paper}>
                 {children}
             </Paper>
         </Modal>
