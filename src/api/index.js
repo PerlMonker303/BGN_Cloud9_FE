@@ -17,3 +17,11 @@ export const getPlaylistApi = (playlistId) => {
       return res.data;
     })
 }
+
+export const getRelatedTopicsApi = (keyword) => {
+  return ['Topic 1', 'Topic 2', 'Topic 3']
+  // return axiosInstance.get(`tbd?keyword=${keyword}`)
+  // .then(res => {
+  //   return res;
+  // });
+}
