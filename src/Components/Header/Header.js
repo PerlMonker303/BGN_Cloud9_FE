@@ -17,7 +17,7 @@ function Header({ keyword, setKeyword, handleButtonClicked }) {
 
   return (
     <div className={styles.header}>
-      <img src="/images/logo.jpg" alt="cloud9" className={styles.logo} />
+      <img src="/images/image 10.png" alt="cloud9" className={styles.logo} />
       <form onSubmit={(e) => handleSubmit(e)}>
         <div className={styles.searchCover}>
           <div className={styles.searchContainer}>
@@ -30,7 +30,9 @@ function Header({ keyword, setKeyword, handleButtonClicked }) {
             />
           </div>
 
-          <Button type="submit">Search</Button>
+          <Button variant="contained" type="submit">
+            Search
+          </Button>
         </div>
       </form>
     </div>
