@@ -1,6 +1,7 @@
 import { Button } from "@material-ui/core";
 import React from "react";
 import styles from "./header.module.css";
+import { FcSearch } from "react-icons/fc";
 
 function Header({ keyword, setKeyword, handleButtonClicked }) {
   // const classes = useStyles();
@@ -9,23 +10,29 @@ function Header({ keyword, setKeyword, handleButtonClicked }) {
     setKeyword(e.target.value);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleButtonClicked();
+  };
+
   return (
     <div className={styles.header}>
       <img src="/images/logo.jpg" alt="cloud9" className={styles.logo} />
+      <form onSubmit={(e) => handleSubmit(e)}>
+        <div className={styles.searchCover}>
+          <div className={styles.searchContainer}>
+            <FcSearch size="30px" />
+            <input
+              type="search"
+              className={styles.search}
+              placeholder="Search for a keyword"
+              onChange={handleTextChanged}
+            />
+          </div>
 
-      <div className={styles.searchCover}>
-        <div className={styles.searchContainer}>
-          <img src="/images/search-icon.svg" alt="" />
-          <input
-            type="search"
-            className={styles.search}
-            placeholder="Search for a keyword"
-            onChange={handleTextChanged}
-          />
+          <Button type="submit">Search</Button>
         </div>
-
-        <Button onClick={handleButtonClicked}>Search</Button>
-      </div>
+      </form>
     </div>
   );
 }

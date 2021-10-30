@@ -10,12 +10,14 @@
 }
 
 .logo {
-  margin: 0 auto;
+  margin: 0 auto 2rem;
   display: block;
 }
 
 .searchCover {
-  /* display: flex; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .search {
@@ -24,20 +26,17 @@
   border: none;
   outline: none;
   padding: 0.8rem 1rem;
+  width: 300px;
 }
 
 .searchContainer {
   display: flex;
-  margin: 0 auto;
+  align-items: center;
+  padding: 0 0.5rem;
+  /* margin: 0 auto; */
   background: #fff;
   border-radius: 5rem;
   /* border-radius: 20px; */
-  width: 100px;
-  width: 100%;
   overflow: hidden;
-}
-
-.searchContainer img {
-  width: 20px;
-  height: 20px;
+  /* max-width: 40rem; */
 }

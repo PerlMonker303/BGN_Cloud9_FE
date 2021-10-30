@@ -100,7 +100,7 @@ const Home = () => {
                 // direction="column"
                 // alignItems="center"
                 // justifyContent="center"
-                spacing="6"
+                spacing="12"
             >
                 
                 <Grid item xs={12} md={4}>
@@ -111,6 +111,11 @@ const Home = () => {
                     <CustomContainer elevation={3} p={12}>
                         <Typography>Related topics</Typography>
                         <RelatedTopics relatedTopicsList={relatedTopicsList} setClicked={handleTopicClicked} />
+                    </CustomContainer>
+
+                    <CustomContainer isHidden={!imagesList.length}>
+                        <Typography>Images</Typography>
+                        <Images imagesList={imagesList} setClicked={handleImageClicked} />
                     </CustomContainer>
                 </Grid>
 
@@ -130,10 +135,7 @@ const Home = () => {
                         {dummy_metabolism}
                     </CustomContainer>
 
-                    <CustomContainer isHidden={!imagesList.length}>
-                        <Typography>Images</Typography>
-                        <Images imagesList={imagesList} setClicked={handleImageClicked} />
-                    </CustomContainer>
+                
 
                     {/* <Thumbnail/> */}
                 </Grid>
