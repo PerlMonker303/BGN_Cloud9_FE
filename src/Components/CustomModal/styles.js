@@ -8,5 +8,8 @@ export const useStyles = makeStyles({
         margin: 'auto',
         height: '90vh',
         width: '120vh',
+    },
+    paperAsChild: {
+        margin: 'auto',
     }
 });
