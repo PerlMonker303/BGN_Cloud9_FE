@@ -11,5 +11,8 @@ export const useStyles = makeStyles({
     },
     paperAsChild: {
         margin: 'auto',
+    },
+    progress: {
+        margin: 'auto'
     }
 });
