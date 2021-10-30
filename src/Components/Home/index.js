@@ -1,21 +1,31 @@
 import React, { useState } from 'react'
-import { useStyles } from "./styles";
+// import { useStyles } from "./styles";
 import { Button, Grid } from '@mui/material';
 import CustomModal from '../CustomModal';
 import YouTube from 'react-youtube';
 import CustomContainer from '../CustomContainer';
-import { getDescriptionApi, getPlaylistApi, getRelatedTopicsApi } from '../../api';
+import { getArticlesApi, getDescriptionApi, getPlaylistApi, getRelatedTopicsApi } from '../../api';
 import RelatedTopics from '../RelatedTopics';
-import { Typography } from '@material-ui/core';
+import { makeStyles, Paper, Typography } from '@material-ui/core';
 import SearchBar from '../SearchBar'
+import Articles from '../Articles';
 import Header from '../Header/Header';
+
+const useStyles = makeStyles(theme => ({
+    paper: {
+        margin: 'auto',
+        padding: '12px',
+    }
+}));
 
 const Home = () => {
     const classes = useStyles();
     const [keyword, setKeyword] = useState("");
     const [description, setDescription] = useState('');
     const [relatedTopicsList, setRelatedTopicsList] = useState([]);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [articlesList, setArticlesList] = useState([]);
+    const [selectedArticle, setSelectedArticle] = useState('');
+    const [isModalArticleOpen, setIsModalArticleOpen] = useState(false);
     const [isModalVideoOpen, setIsModalVideoOpen] = useState(false);
 
     const handleButtonClicked = async () => {
@@ -23,6 +33,8 @@ const Home = () => {
         setDescription(desc);
         const relTopics = await getRelatedTopicsApi(keyword);
         setRelatedTopicsList(relTopics);
+        const art = await getArticlesApi(keyword);
+        setArticlesList(art);
 
         // also test the youtube api
         const youtubeData = await getPlaylistApi("PLAE36CEFE9200FDDD");
@@ -30,10 +42,6 @@ const Home = () => {
         youtubeData.items.map((video) => {
             console.log(video);
         })
-    }
-
-    const handleModalClicked = () => {
-        setIsModalOpen(true);
     }
 
     const handleModalVideoClicked = () => {
@@ -44,6 +52,11 @@ const Home = () => {
         console.log(topic);
         setKeyword(topic);
         handleButtonClicked();
+    }
+
+    const handleArticleClicked = (article) => {
+        setSelectedArticle(article)
+        setIsModalArticleOpen(true);
     }
 
     const renderPDF = (url) => <object data={url} type="application/pdf" width="100%" height="100%" />
@@ -69,7 +82,7 @@ const Home = () => {
                 handleButtonClicked={handleButtonClicked}
              />
 
-            <Button onClick={handleModalClicked}>Modal pdf</Button>
+            {/* <Button onClick={handleModalClicked}>Modal pdf</Button> */}
             <Button onClick={handleModalVideoClicked}>Modal video</Button>
 
             <Grid
@@ -79,35 +92,43 @@ const Home = () => {
                 // direction="column"
                 // alignItems="center"
                 // justifyContent="center"
-                // spacing="6"
+                spacing="6"
             >
-                    <Grid container spacing={2}>
-                        <Grid item xs={4}>
-                            <CustomContainer>
-                                {dummy_photosynthesis}
-                            </CustomContainer>
-                        </Grid>
-                        <Grid item xs={4}>
-                            <CustomContainer>
-                                {dummy_ecosystem}
-                            </CustomContainer>
-                        </Grid>
-                        <Grid item xs={4}>
-                            <CustomContainer>
-                                {dummy_metabolism}
-                            </CustomContainer>
-                        </Grid>
-                    </Grid>
-                </Grid>
-                <Grid item>
-                    <CustomContainer>
+                
+                <Grid item xs={12} md={4}>
+                    <CustomContainer className={classes.paper}>
+                        {dummy_photosynthesis}
+                    </CustomContainer>
+               
+                    <CustomContainer elevation={3} p={12}>
                         <Typography>Related topics</Typography>
                         <RelatedTopics relatedTopicsList={relatedTopicsList} setClicked={handleTopicClicked} />
                     </CustomContainer>
                 </Grid>
 
-            <CustomModal isOpen={isModalOpen} setIsOpen={setIsModalOpen}>
-                {renderPDF("https://arxiv.org/pdf/2104.07079.pdf")}
+                <Grid item xs={12} md={4}>
+                    {/* <CustomContainer>
+                        {dummy_ecosystem}
+                    </CustomContainer> */}
+
+                    <CustomContainer>
+                        <Typography>Articles</Typography>
+                        <Articles articlesList={articlesList} setClicked={handleArticleClicked} />
+                    </CustomContainer>
+                </Grid>
+
+                <Grid item xs={12} md={4}>
+                    <CustomContainer>
+                        {dummy_metabolism}
+                    </CustomContainer>
+
+                    {/* <Thumbnail/> */}
+                </Grid>
+                
+            </Grid>
+
+            <CustomModal isOpen={isModalArticleOpen} setIsOpen={setIsModalArticleOpen}>
+                {renderPDF(selectedArticle.url)}
             </CustomModal>
             <CustomModal isOpen={isModalVideoOpen} setIsOpen={setIsModalVideoOpen}>
                 <YouTube videoId="VLy6j3j95Ac" opts={videoOptions} />
