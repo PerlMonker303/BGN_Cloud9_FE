@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useStyles } from "./styles";
-import { TextField, Input } from "@material-ui/core";
+import { Input } from "@material-ui/core";
 
 const SearchBar = ({ keyword, setKeyword }) => {
     const classes = useStyles();

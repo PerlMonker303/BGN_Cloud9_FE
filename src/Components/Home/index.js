@@ -7,6 +7,7 @@ import CustomContainer from '../CustomContainer';
 import { getDescriptionApi, getPlaylistApi, getRelatedTopicsApi } from '../../api';
 import RelatedTopics from '../RelatedTopics';
 import { Typography } from '@material-ui/core';
+import SearchBar from '../SearchBar'
 
 const Home = () => {
     const classes = useStyles();
@@ -69,6 +70,9 @@ const Home = () => {
                 justifyContent="center"
                 spacing="6"
             >
+                <Grid item>
+                    <SearchBar keyword={keyword} setKeyword={setKeyword} />
+                </Grid>
                 <Grid item>
                     <Button onClick={handleButtonClicked}>Search</Button>
                 </Grid>
