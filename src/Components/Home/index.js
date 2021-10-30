@@ -8,6 +8,7 @@ import { getDescriptionApi, getPlaylistApi, getRelatedTopicsApi } from '../../ap
 import RelatedTopics from '../RelatedTopics';
 import { Typography } from '@material-ui/core';
 import SearchBar from '../SearchBar'
+import Header from '../Header/Header';
 
 const Home = () => {
     const classes = useStyles();
@@ -62,28 +63,24 @@ const Home = () => {
 
     return (
         <>
+            <Header 
+                keyword={keyword} 
+                setKeyword={setKeyword} 
+                handleButtonClicked={handleButtonClicked}
+             />
+
+            <Button onClick={handleModalClicked}>Modal pdf</Button>
+            <Button onClick={handleModalVideoClicked}>Modal video</Button>
+
             <Grid
                 container
                 className={classes.content}
-                direction="column"
-                alignItems="center"
-                justifyContent="center"
-                spacing="6"
+                p={2}
+                // direction="column"
+                // alignItems="center"
+                // justifyContent="center"
+                // spacing="6"
             >
-                <Grid item>
-                    <SearchBar keyword={keyword} setKeyword={setKeyword} />
-                </Grid>
-                <Grid item>
-                    <Button onClick={handleButtonClicked}>Search</Button>
-                </Grid>
-                <Grid item>
-                    <Button onClick={handleModalClicked}>Modal pdf</Button>
-                </Grid>
-
-                <Grid item>
-                    <Button onClick={handleModalVideoClicked}>Modal video</Button>
-                </Grid>
-                <Grid item>
                     <Grid container spacing={2}>
                         <Grid item xs={4}>
                             <CustomContainer>
@@ -108,7 +105,6 @@ const Home = () => {
                         <RelatedTopics relatedTopicsList={relatedTopicsList} setClicked={handleTopicClicked} />
                     </CustomContainer>
                 </Grid>
-            </Grid >
 
             <CustomModal isOpen={isModalOpen} setIsOpen={setIsModalOpen}>
                 {renderPDF("https://arxiv.org/pdf/2104.07079.pdf")}

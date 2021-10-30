@@ -1,0 +1,43 @@
+.header {
+  background: linear-gradient(
+    91.77deg,
+    rgba(174, 181, 249, 0.86) 16.39%,
+    rgba(239, 164, 189, 0.86) 98.54%,
+    rgba(239, 164, 189, 0.062559) 106.37%
+  );
+  padding: 2rem;
+  width: 100%;
+}
+
+.logo {
+  margin: 0 auto;
+  display: block;
+}
+
+.searchCover {
+  /* display: flex; */
+}
+
+.search {
+  /* width: 100%; */
+  display: block;
+  border: none;
+  outline: none;
+  padding: 0.8rem 1rem;
+}
+
+.searchContainer {
+  display: flex;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 5rem;
+  /* border-radius: 20px; */
+  width: 100px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.searchContainer img {
+  width: 20px;
+  height: 20px;
+}

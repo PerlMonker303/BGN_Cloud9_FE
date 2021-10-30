@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 
 export const useStyles = makeStyles({
-    textField: {
-        backgroundColor: 'red'
-    }
+  textField: {
+    backgroundColor: "red",
+  },
 });
