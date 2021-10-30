@@ -4,17 +4,20 @@ import { Button, Grid } from '@mui/material';
 import CustomModal from '../CustomModal';
 import YouTube from 'react-youtube';
 import CustomContainer from '../CustomContainer';
-import { getDescriptionApi, getPlaylistApi, getRelatedTopicsApi } from '../../api';
+import { getArticlesApi, getDescriptionApi, getPlaylistApi, getRelatedTopicsApi } from '../../api';
 import RelatedTopics from '../RelatedTopics';
 import { Typography } from '@material-ui/core';
 import SearchBar from '../SearchBar'
+import Articles from '../Articles';
 
 const Home = () => {
     const classes = useStyles();
     const [keyword, setKeyword] = useState("");
     const [description, setDescription] = useState('');
     const [relatedTopicsList, setRelatedTopicsList] = useState([]);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [articlesList, setArticlesList] = useState([]);
+    const [selectedArticle, setSelectedArticle] = useState('');
+    const [isModalArticleOpen, setIsModalArticleOpen] = useState(false);
     const [isModalVideoOpen, setIsModalVideoOpen] = useState(false);
 
     const handleButtonClicked = async () => {
@@ -22,6 +25,8 @@ const Home = () => {
         setDescription(desc);
         const relTopics = await getRelatedTopicsApi(keyword);
         setRelatedTopicsList(relTopics);
+        const art = await getArticlesApi(keyword);
+        setArticlesList(art);
 
         // also test the youtube api
         const youtubeData = await getPlaylistApi("PLAE36CEFE9200FDDD");
@@ -29,10 +34,6 @@ const Home = () => {
         youtubeData.items.map((video) => {
             console.log(video);
         })
-    }
-
-    const handleModalClicked = () => {
-        setIsModalOpen(true);
     }
 
     const handleModalVideoClicked = () => {
@@ -43,6 +44,11 @@ const Home = () => {
         console.log(topic);
         setKeyword(topic);
         handleButtonClicked();
+    }
+
+    const handleArticleClicked = (article) => {
+        setSelectedArticle(article)
+        setIsModalArticleOpen(true);
     }
 
     const renderPDF = (url) => <object data={url} type="application/pdf" width="100%" height="100%" />
@@ -76,9 +82,6 @@ const Home = () => {
                 <Grid item>
                     <Button onClick={handleButtonClicked}>Search</Button>
                 </Grid>
-                <Grid item>
-                    <Button onClick={handleModalClicked}>Modal pdf</Button>
-                </Grid>
 
                 <Grid item>
                     <Button onClick={handleModalVideoClicked}>Modal video</Button>
@@ -108,10 +111,16 @@ const Home = () => {
                         <RelatedTopics relatedTopicsList={relatedTopicsList} setClicked={handleTopicClicked} />
                     </CustomContainer>
                 </Grid>
+                <Grid item>
+                    <CustomContainer>
+                        <Typography>Articles</Typography>
+                        <Articles articlesList={articlesList} setClicked={handleArticleClicked} />
+                    </CustomContainer>
+                </Grid>
             </Grid >
 
-            <CustomModal isOpen={isModalOpen} setIsOpen={setIsModalOpen}>
-                {renderPDF("https://arxiv.org/pdf/2104.07079.pdf")}
+            <CustomModal isOpen={isModalArticleOpen} setIsOpen={setIsModalArticleOpen}>
+                {renderPDF(selectedArticle.url)}
             </CustomModal>
             <CustomModal isOpen={isModalVideoOpen} setIsOpen={setIsModalVideoOpen}>
                 <YouTube videoId="VLy6j3j95Ac" opts={videoOptions} />

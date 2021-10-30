@@ -5,6 +5,7 @@ const YOUTUBE_PLAYLIST_ITEMS_API = 'https://www.googleapis.com/youtube/v3/playli
 
 export const getDescriptionApi = (keyword) => {
   return "A description from axios";
+  // todo
   // return axiosInstance.get(`description?keyword=${keyword}`)
   // .then(res => {
   //   return res;
@@ -20,8 +21,20 @@ export const getPlaylistApi = (playlistId) => {
 
 export const getRelatedTopicsApi = (keyword) => {
   return ['Topic 1', 'Topic 2', 'Topic 3']
+  // todo
   // return axiosInstance.get(`tbd?keyword=${keyword}`)
   // .then(res => {
   //   return res;
   // });
+}
+
+export const getArticlesApi = (keyword) => {
+  const articles = [
+    { title: 'What Is Photosynthesis? | Live Science', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam eget amet nunc urna ornare convallis mi netus...', url: 'https://arxiv.org/pdf/2104.07079.pdf' },
+    { title: 'What Is Photosynthesis? | Live Science', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam eget amet nunc urna ornare convallis mi netus...', url: 'https://arxiv.org/pdf/2104.07079.pdf' },
+    { title: 'What Is Photosynthesis? | Live Science', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam eget amet nunc urna ornare convallis mi netus...', url: 'https://arxiv.org/pdf/2104.07079.pdf' },
+    { title: 'What Is Photosynthesis? | Live Science', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam eget amet nunc urna ornare convallis mi netus...', url: 'https://arxiv.org/pdf/2104.07079.pdf' },
+  ];
+  return articles;
+  // todo
 }
