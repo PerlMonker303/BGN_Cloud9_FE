@@ -3,7 +3,7 @@ import React from "react";
 import styles from "./header.module.css";
 import { FcSearch } from "react-icons/fc";
 
-function Header({ keyword, setKeyword, handleButtonClicked }) {
+function Header({ keyword, setKeyword, handleSearch }) {
   // const classes = useStyles();
 
   const handleTextChanged = (e) => {
@@ -12,7 +12,7 @@ function Header({ keyword, setKeyword, handleButtonClicked }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleButtonClicked();
+    handleSearch();
   };
 
   return (
@@ -27,10 +27,11 @@ function Header({ keyword, setKeyword, handleButtonClicked }) {
               className={styles.search}
               placeholder="Search for a keyword"
               onChange={handleTextChanged}
+              value={keyword}
             />
           </div>
 
-          <Button variant="contained" type="submit">
+          <Button variant="contained" type="submit" disabled={keyword === ''}>
             Search
           </Button>
         </div>

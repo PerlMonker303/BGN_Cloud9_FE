@@ -25,14 +25,17 @@ const Home = () => {
     const [selectedArticle, setSelectedArticle] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
     const [selectedVideo, setSelectedVideo] = useState(null);
+    const [selectedTopic, setSelectedTopic] = useState('');
     const [isModalArticleOpen, setIsModalArticleOpen] = useState(false);
     const [isModalVideoOpen, setIsModalVideoOpen] = useState(false);
     const [isModalImageOpen, setIsModalImageOpen] = useState(false);
     const [isVideoLoading, setIsVideoLoading] = useState(false);
+    const [isInitialPage, setIsInitialPage] = useState(true);
 
-    const handleButtonClicked = async () => {
+    const handleSearch = async () => {
+        setIsInitialPage(false);
         const desc = await getDescriptionApi(keyword);
-        setDescription(desc[0].description);
+        desc.length ? setDescription(desc[0].description) : setDescription('');
         const relTopics = await getRelatedTopicsApi(keyword);
         setRelatedTopicsList(relTopics);
         const art = await getArticlesApi(keyword);
@@ -40,15 +43,19 @@ const Home = () => {
         const images = await getImagesApi(keyword);
         setImagesList(images);
         const videos = await getPlaylistApi(keyword);
-        console.log(videos);
         setVideosList(videos);
     }
 
     const handleTopicClicked = (topic) => {
-        console.log(topic);
         setKeyword(topic);
-        handleButtonClicked();
+        setSelectedTopic(topic);
     }
+
+    React.useEffect(() => {
+        if (keyword) {
+            handleSearch();
+        }
+    }, [selectedTopic])
 
     const handleArticleClicked = (article) => {
         setSelectedArticle(article)
@@ -61,7 +68,6 @@ const Home = () => {
     }
 
     const handleVideoClicked = (video) => {
-        console.log(video);
         setSelectedVideo(video);
         setIsModalVideoOpen(true);
         setIsVideoLoading(true);
@@ -73,7 +79,6 @@ const Home = () => {
         height: '390',
         width: '640',
         playerVars: {
-            // https://developers.google.com/youtube/player_parameters
             autoplay: 1,
         },
     };
@@ -83,7 +88,7 @@ const Home = () => {
             <Header
                 keyword={keyword}
                 setKeyword={setKeyword}
-                handleButtonClicked={handleButtonClicked}
+                handleSearch={handleSearch}
             />
             <Grid
                 container
@@ -97,6 +102,7 @@ const Home = () => {
 
                 <Grid item xs={12} md={4}>
                     <CustomContainer className={classes.paper} isHidden={!description}>
+                        <Typography>Description</Typography>
                         {description}
                     </CustomContainer>
 
@@ -105,7 +111,7 @@ const Home = () => {
                         <RelatedTopics relatedTopicsList={relatedTopicsList} setClicked={handleTopicClicked} />
                     </CustomContainer>
 
-                    <CustomContainer isHidden={!imagesList.length}>
+                    <CustomContainer isHidden={isInitialPage}>
                         <Typography>Images</Typography>
                         <Images imagesList={imagesList} setClicked={handleImageClicked} />
                     </CustomContainer>
@@ -113,7 +119,7 @@ const Home = () => {
 
                 <Grid item xs={12} md={4}>
 
-                    <CustomContainer isHidden={!articlesList.length}>
+                    <CustomContainer isHidden={isInitialPage}>
                         <Typography>Articles</Typography>
                         <Articles articlesList={articlesList} setClicked={handleArticleClicked} />
                     </CustomContainer>
@@ -122,7 +128,7 @@ const Home = () => {
                 <Grid item xs={12} md={4}>
 
 
-                    <CustomContainer isHidden={!videosList.length}>
+                    <CustomContainer isHidden={isInitialPage}>
                         <Typography>Videos</Typography>
                         <Videos videosList={videosList} setClicked={handleVideoClicked} />
                     </CustomContainer>
@@ -131,7 +137,7 @@ const Home = () => {
             </Grid>
 
             <CustomModal isOpen={isModalArticleOpen} setIsOpen={setIsModalArticleOpen}>
-                {selectedArticle && renderPDF(selectedArticle.url)}
+                {selectedArticle && renderPDF(selectedArticle.link)}
             </CustomModal>
             <CustomModal isOpen={isModalVideoOpen} setIsOpen={setIsModalVideoOpen} isLoading={isVideoLoading} resizeAsChild>
                 {selectedVideo && <YouTube videoId={selectedVideo.snippet.resourceId.videoId} opts={videoOptions} onReady={() => setIsVideoLoading(false)} />}
