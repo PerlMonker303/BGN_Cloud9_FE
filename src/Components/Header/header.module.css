@@ -5,13 +5,15 @@
     rgba(239, 164, 189, 0.86) 98.54%,
     rgba(239, 164, 189, 0.062559) 106.37%
   );
-  padding: 2rem;
+  padding: 1.5rem;
   width: 100%;
 }
 
 .logo {
-  margin: 0 auto 2rem;
+  margin: 0 auto 0.5rem;
   display: block;
+  cursor: pointer;
+  pointer-events: all;
 }
 
 .searchCover {

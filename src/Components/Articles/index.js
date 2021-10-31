@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useStyles } from "./styles";
-import { Box, Typography } from "@material-ui/core";
+import { Box, CircularProgress, Typography } from "@material-ui/core";
 import Article from "./Article";
 import InfiniteScroll from "react-infinite-scroll-component";
 
@@ -19,18 +19,16 @@ const Articles = ({ articlesList, setClicked }) => {
       </>
     );
   }
+  const renderLoader = () => {
+    return <CircularProgress className={classes.progress} />
+  }
   return (
     <InfiniteScroll
       dataLength={articlesList.length}
       // next={this.fetchMoreData}
       // hasMore={this.state.hasMore}
-      loader={<h4>Loading...</h4>}
+      loader={renderLoader()}
       height={700}
-      endMessage={
-        <p style={{ textAlign: "center" }}>
-          <b>Yay! You have seen it all</b>
-        </p>
-      }
     >
       <Box style={{ height: "100%" }} className={classes.box}>
         {articlesList.map((article, idx) => (

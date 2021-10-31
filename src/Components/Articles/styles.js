@@ -4,5 +4,5 @@ export const useStyles = makeStyles({
   box: {
     margin: "4px auto",
     height: "100% !important",
-  },
+  }
 });

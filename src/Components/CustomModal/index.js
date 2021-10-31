@@ -23,15 +23,15 @@ const CustomModal = ({
         <Modal onClose={handleClose} open={isOpen} className={classes.modal}>
             <Paper className={resizeAsChild ? classes.paperAsChild : classes.paper}>
                 {isLoading && (
-                    <div 
+                    <div
                         style={{
-                            display: 'flex', 
-                            alignItems: 'center', 
-                            width: '100%', 
+                            display: 'flex',
+                            alignItems: 'center',
+                            width: '100%',
                             height: '100px'
                         }}
                     >
-                        <CircularProgress className={classes.progress} />
+                        {renderLoader()}
                     </div>
                 )}
                 {children}

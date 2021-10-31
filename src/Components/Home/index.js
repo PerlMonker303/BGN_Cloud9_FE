@@ -50,6 +50,11 @@ const Home = () => {
     }
 
     const handleTopicClicked = (topic) => {
+        setDescription('');
+        setRelatedTopicsList([]);
+        setArticlesList([]);
+        setImagesList([]);
+        setVideosList([]);
         setKeyword(topic);
         setSelectedTopic(topic);
     }
@@ -106,7 +111,7 @@ const Home = () => {
                 <Grid item xs={12} md={4}>
                     <CustomContainer className={classes.paper} isHidden={!description}>
                         <Typography variant="h6">Description</Typography>
-                        <p style={{  textOverflow:'ellipsis'}}>
+                        <p style={{ textOverflow: 'ellipsis' }}>
                             {description}
                         </p>
                     </CustomContainer>
@@ -148,7 +153,7 @@ const Home = () => {
                 {selectedVideo && <YouTube videoId={selectedVideo.snippet.resourceId.videoId} opts={videoOptions} onReady={() => setIsVideoLoading(false)} />}
             </CustomModal>
             <CustomModal isOpen={isModalImageOpen} setIsOpen={setIsModalImageOpen} resizeAsChild>
-                {selectedImage && <Image image={selectedImage} />}
+                {selectedImage && <Image image={selectedImage} width={'550'} />}
             </CustomModal>
         </>
     )
