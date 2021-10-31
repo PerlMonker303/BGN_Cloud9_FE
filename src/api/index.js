@@ -45,7 +45,7 @@ export const getRelatedTopicsApi = async (keyword) => {
   // });
 
   let relatedWords = await fetch(
-    `https://api.datamuse.com/words?rel_trg=${keyword}&max=4`
+    `https://api.datamuse.com/words?rel_trg=${keyword}&max=8`
   );
   let data = await relatedWords.json();
   return data;

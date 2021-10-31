@@ -12,6 +12,7 @@ import Images from '../Images';
 import Image from '../Images/Image';
 import Header from '../Header/Header';
 import Videos from '../Videos';
+import { startsWithCapital, capitalizeFirstLetter } from '../../utils';
 
 
 const Home = () => {
@@ -44,8 +45,15 @@ const Home = () => {
         setImagesLoading(true);
         setVideosLoading(true);
 
-        const desc = await getDescriptionApi(keyword);
-        desc.length ? setDescription(desc) : setDescription('');
+        let desc = await getDescriptionApi(keyword);
+        if (desc.length === 0) {
+            setDescription('');
+        } else {
+            if (desc.length === 1 && !startsWithCapital(desc[0].definition)) {
+                desc[0] = { definition: capitalizeFirstLetter(desc[0].definition) };
+            }
+            setDescription(desc)
+        }
         const relTopics = await getRelatedTopicsApi(keyword);
         setRelatedTopicsList(relTopics.map((value) => {
             return value.word
