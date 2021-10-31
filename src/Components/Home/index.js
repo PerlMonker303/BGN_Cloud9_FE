@@ -192,7 +192,7 @@ const Home = () => {
 
                     <CustomContainer isHidden={isInitialPage}>
                         <Typography variant="h6">Articles</Typography>
-                        <Articles articlesList={articlesList} setClicked={handleArticleClicked} loading={articlesLoading} />
+                        <Articles articlesList={articlesList} setClicked={handleArticleClicked} loading={articlesLoading} isModalArticleOpen={isModalArticleOpen} />
                     </CustomContainer>
                 </Grid>
 

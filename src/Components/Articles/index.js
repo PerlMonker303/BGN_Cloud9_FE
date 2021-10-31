@@ -1,11 +1,11 @@
 import React from "react";
 
 import { useStyles } from "./styles";
-import { Box, CircularProgress, Typography } from "@material-ui/core";
+import { Box, CircularProgress } from "@material-ui/core";
 import Article from "./Article";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-const Articles = ({ articlesList, setClicked, loading = false }) => {
+const Articles = ({ articlesList, setClicked, loading = false, isModalArticleOpen = false }) => {
   const classes = useStyles();
   const articlesAtATime = 10;
   const [articlesIndex, setArticlesIndex] = React.useState(0);
@@ -19,12 +19,24 @@ const Articles = ({ articlesList, setClicked, loading = false }) => {
   };
 
   React.useEffect(() => {
-    if (!loading && articlesList.length) fetchMoreData();
+    if (articlesList.length) fetchMoreData();
     if (loading) {
       setArticlesIndex(0);
       setCurrentArticles([]);
     }
   }, [loading]);
+
+  React.useEffect(() => {
+    if (!isModalArticleOpen) {
+      if (!currentArticles.length) {
+        fetchMoreData();
+      }
+    }
+  }, [isModalArticleOpen])
+
+  React.useEffect(() => {
+    console.log(currentArticles);
+  }, [currentArticles])
 
   const renderLoader = () => {
     return (
