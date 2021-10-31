@@ -83,10 +83,6 @@ const Home = () => {
         }
     }, [selectedTopic])
 
-    React.useEffect(() => {
-        console.log(searchHistory);
-    }, [searchHistory])
-
     const handleArticleClicked = (article) => {
         setSelectedArticle(article)
         setIsModalArticleOpen(true);
@@ -140,9 +136,14 @@ const Home = () => {
                 <Grid item xs={12} md={4}>
                     <CustomContainer className={classes.paper} isHidden={!description}>
                         <Typography variant="h6">Description</Typography>
-                        <p style={{ textOverflow: 'ellipsis' }}>
-                            {description}
-                        </p>
+                        {description && description.map((desc, idx) => {
+                            return (
+                                <p key={idx} style={{ textOverflow: 'ellipsis' }}>
+                                    {description.length > 1 ? `${idx + 1}. ${desc.definition}` : desc.definition}
+                                </p>
+                            )
+                        })}
+
                     </CustomContainer>
 
                     <CustomContainer elevation={3} p={12} isHidden={!relatedTopicsList.length}>

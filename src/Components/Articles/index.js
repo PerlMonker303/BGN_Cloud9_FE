@@ -26,10 +26,6 @@ const Articles = ({ articlesList, setClicked, loading = false }) => {
     }
   }, [loading])
 
-  React.useEffect(() => {
-    console.log(currentArticles);
-  }, [currentArticles])
-
   const renderLoader = () => {
     return <Box className={classes.progressBox}>
       <CircularProgress className={classes.progress} />
