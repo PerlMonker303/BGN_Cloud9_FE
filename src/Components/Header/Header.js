@@ -38,7 +38,6 @@ function Header({
           onClick={handleLogoClicked}
         />
 
-
         {!title ? (
           <form onSubmit={(e) => handleSubmit(e)}>
             <div className={styles.searchCover}>
@@ -57,6 +56,7 @@ function Header({
                 variant="contained"
                 type="submit"
                 disabled={keyword === ""}
+                color="primary"
               >
                 Search
               </Button>

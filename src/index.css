@@ -35,4 +35,5 @@ code {
 .image-img {
   width: 100%;
   gap: 10px;
+  height: 100%;
 }

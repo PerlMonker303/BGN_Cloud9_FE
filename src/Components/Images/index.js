@@ -66,6 +66,7 @@ const Images = ({ imagesList, setClicked, loading = false }) => {
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(3, 1fr)",
+          gap: "10px",
         }}
       >
         {imagesList.map((image, idx) => (
