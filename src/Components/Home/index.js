@@ -31,9 +31,14 @@ const Home = () => {
     const [isModalImageOpen, setIsModalImageOpen] = useState(false);
     const [isVideoLoading, setIsVideoLoading] = useState(false);
     const [isInitialPage, setIsInitialPage] = useState(true);
+    const [articlesLoading, setArticlesLoading] = useState(false);
 
     const handleSearch = async () => {
         setIsInitialPage(false);
+
+        setArticlesLoading(true);
+
+
         const desc = await getDescriptionApi(keyword);
         desc.length ? setDescription(desc[0].description) : setDescription('');
         const relTopics = await getRelatedTopicsApi(keyword);
@@ -43,6 +48,7 @@ const Home = () => {
         }))
         const art = await getArticlesApi(keyword);
         setArticlesList(art);
+        setArticlesLoading(true);
         const images = await getImagesApi(keyword);
         setImagesList(images);
         const videos = await getPlaylistApi(keyword);
@@ -81,7 +87,12 @@ const Home = () => {
         setIsVideoLoading(true);
     }
 
-    const renderPDF = (url) => <object data={url} type="application/pdf" width="100%" height="100%" />
+    const renderPDF = (url) => {
+        if (url.startsWith('http') && !url.startsWith('https')) {
+            url = url.replace('http', 'https')
+        }
+        return <object data={url} type="application/pdf" width="100%" height="100%" />
+    }
 
     const videoOptions = {
         height: '490',
@@ -131,7 +142,7 @@ const Home = () => {
 
                     <CustomContainer isHidden={isInitialPage}>
                         <Typography variant="h6">Articles</Typography>
-                        <Articles articlesList={articlesList} setClicked={handleArticleClicked} />
+                        <Articles articlesList={articlesList} setClicked={handleArticleClicked} loading={articlesLoading} />
                     </CustomContainer>
                 </Grid>
 

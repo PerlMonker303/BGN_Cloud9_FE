@@ -5,8 +5,12 @@ import { Box, CircularProgress, Typography } from "@material-ui/core";
 import Article from "./Article";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-const Articles = ({ articlesList, setClicked }) => {
+const Articles = ({ articlesList, setClicked, loading = false }) => {
   const classes = useStyles();
+  const renderLoader = () => {
+    return <CircularProgress className={classes.progress} />
+  }
+  // loading && !articlesList.length && renderLoader();
   if (!articlesList.length) {
     return (
       <>
@@ -19,9 +23,7 @@ const Articles = ({ articlesList, setClicked }) => {
       </>
     );
   }
-  const renderLoader = () => {
-    return <CircularProgress className={classes.progress} />
-  }
+
   return (
     <InfiniteScroll
       dataLength={articlesList.length}
@@ -30,7 +32,7 @@ const Articles = ({ articlesList, setClicked }) => {
       loader={renderLoader()}
       height={700}
     >
-      <Box style={{ height: "100%" }} className={classes.box}>
+      <Box style={{ height: "100%", paddingRight: "4px" }} className={classes.box}>
         {articlesList.map((article, idx) => (
           <Article
             key={idx}
