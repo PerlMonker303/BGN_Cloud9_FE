@@ -4,7 +4,7 @@ import { Grid } from '@mui/material';
 import CustomModal from '../CustomModal';
 import YouTube from 'react-youtube';
 import CustomContainer from '../CustomContainer';
-import { getArticlesApi, getDescriptionApi, getImagesApi, getPlaylistApi, getRelatedTopicsApi } from '../../api';
+import { getArticlesApi, getDescriptionApi, getImagesApi, getVideosApi, getRelatedTopicsApi } from '../../api';
 import RelatedTopics from '../RelatedTopics';
 import { Typography } from '@material-ui/core';
 import Articles from '../Articles';
@@ -42,6 +42,8 @@ const Home = () => {
         isInitialPage && setIsInitialPage(false);
         resetStates();
 
+        handleBreadCrumbsLogic(keyword);
+
         setArticlesLoading(true);
         setImagesLoading(true);
         setVideosLoading(true);
@@ -65,7 +67,7 @@ const Home = () => {
         const images = await getImagesApi(keyword);
         setImagesList(images);
         setImagesLoading(false);
-        const videos = await getPlaylistApi(keyword);
+        const videos = await getVideosApi(keyword);
         setVideosList(videos);
         setVideosLoading(false);
 
@@ -80,17 +82,13 @@ const Home = () => {
         setVideosList([]);
     }
 
-    const handleTopicClicked = (topic) => {
-        resetStates();
-        setKeyword(topic);
-        setSelectedTopic(topic);
-
+    const handleBreadCrumbsLogic = (keyword) => {
         let searchHistoryTemp = searchHistory;
         if (searchHistoryTemp.length > 1) {
-            const index = searchHistoryTemp.findIndex(search => search === topic)
+            const index = searchHistoryTemp.findIndex(search => search === keyword)
             if (index > -1) {
                 searchHistoryTemp.splice(index, 1)
-                searchHistoryTemp = [...searchHistoryTemp, topic]
+                searchHistoryTemp = [...searchHistoryTemp, keyword]
             }
 
             if (searchHistoryTemp.length > maximumBreadCumbs) {
@@ -99,7 +97,13 @@ const Home = () => {
 
             setSearchHistory(searchHistoryTemp)
         }
+    }
 
+    const handleTopicClicked = (topic) => {
+        resetStates();
+        setKeyword(topic);
+        setSelectedTopic(topic);
+        handleBreadCrumbsLogic(topic);
     }
 
     React.useEffect(() => {
@@ -188,7 +192,7 @@ const Home = () => {
 
                     <CustomContainer isHidden={isInitialPage}>
                         <Typography variant="h6">Articles</Typography>
-                        <Articles articlesList={articlesList} setClicked={handleArticleClicked} loading={articlesLoading} />
+                        <Articles articlesList={articlesList} setClicked={handleArticleClicked} loading={articlesLoading} isModalArticleOpen={isModalArticleOpen} />
                     </CustomContainer>
                 </Grid>
 

@@ -1,12 +1,31 @@
 import React from "react";
 
 import { useStyles } from "./styles";
-import { Box, CircularProgress, Typography } from "@material-ui/core";
+import { Box, CircularProgress } from "@material-ui/core";
 import Video from "./Video";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 const Videos = ({ videosList, setClicked, loading = false }) => {
   const classes = useStyles();
+  const videosAtATime = 3;
+  const [videosIndex, setVideosIndex] = React.useState(0);
+  const [currentVideos, setCurrentVideos] = React.useState([]);
+  const fetchMoreData = () => {
+    const videosListSliced = videosList.slice(videosIndex, videosIndex + videosAtATime);
+    const concatenation = [...currentVideos, ...videosListSliced];
+    setCurrentVideos(concatenation);
+    const newArticlesIndex = videosIndex + videosAtATime;
+    setVideosIndex(newArticlesIndex);
+  };
+
+  React.useEffect(() => {
+    if (!loading && videosList.length) fetchMoreData();
+    if (loading) {
+      setVideosIndex(0);
+      setCurrentVideos([]);
+    }
+  }, [loading]);
+
   const renderLoader = () => {
     return (
       <Box className={classes.progressBox}>
@@ -33,10 +52,9 @@ const Videos = ({ videosList, setClicked, loading = false }) => {
   }
   return (
     <InfiniteScroll
-      dataLength={videosList.length}
-      // next={this.fetchMoreData}
-      // hasMore={this.state.hasMore}
-      loader={<h4>Loading...</h4>}
+      dataLength={currentVideos.length}
+      next={fetchMoreData}
+      hasMore={videosIndex < videosList.length}
       height={700}
       endMessage={
         <p style={{ textAlign: "center" }}>
@@ -45,7 +63,7 @@ const Videos = ({ videosList, setClicked, loading = false }) => {
       }
     >
       <Box className={classes.box}>
-        {videosList.map((video, idx) => (
+        {currentVideos.map((video, idx) => (
           <Video
             key={idx}
             video={video}

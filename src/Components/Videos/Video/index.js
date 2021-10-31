@@ -1,4 +1,4 @@
-import { Link, Typography } from '@material-ui/core';
+import { Link } from '@material-ui/core';
 import { Box } from '@mui/system';
 import React from 'react'
 import { useStyles } from "./styles";
@@ -10,9 +10,9 @@ const Video = ({ video, idx, setClicked }) => {
     }
     return (
         <Box className={classes.box}>
-            <Link className={classes.title} onClick={handleOnClick}>{video.snippet.title}</Link>
+            <Link className={classes.title} onClick={handleOnClick}>{video.title}</Link>
             <Box className={classes.thumbnail}>
-                <img src={video.snippet.thumbnails.standard.url} alt='thumbnail' width='100%' onClick={setClicked} />
+                <img src={video.thumbnail.static} alt='thumbnail' width='100%' onClick={setClicked} />
             </Box>
         </Box>
     )
