@@ -1,26 +1,38 @@
 import React from "react";
 
 import { useStyles } from "./styles";
-import { CircularProgress, ImageList, ImageListItem, Typography } from "@material-ui/core";
+import {
+  CircularProgress,
+  ImageList,
+  ImageListItem,
+  Typography,
+} from "@material-ui/core";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Box } from "@mui/system";
 
 const Images = ({ imagesList, setClicked, loading = false }) => {
   const classes = useStyles();
   const renderLoader = () => {
-    return <Box className={classes.progressBox}>
-      <CircularProgress className={classes.progress} />
-    </Box>
-  }
+    return (
+      <Box className={classes.progressBox}>
+        <CircularProgress className={classes.progress} />
+      </Box>
+    );
+  };
   if (!imagesList.length) {
     return (
       <>
-        {loading ? renderLoader() : <><img
-          src="/images/not-found.png"
-          alt="not-found"
-          className="not-found"
-        />
-          <Typography align="center">Nothing to show</Typography></>}
+        {loading ? (
+          renderLoader()
+        ) : (
+          <>
+            <img
+              src="/images/not-found.png"
+              alt="not-found"
+              className="not-found"
+            />
+          </>
+        )}
       </>
     );
   }
@@ -37,7 +49,7 @@ const Images = ({ imagesList, setClicked, loading = false }) => {
         </p>
       }
     >
-      <ImageList variant="quilted" cols={3}>
+      {/* <ImageList variant="masonry" cols={3}>
         {imagesList.map((image, idx) => (
           <ImageListItem key={idx}>
             <img
@@ -49,7 +61,25 @@ const Images = ({ imagesList, setClicked, loading = false }) => {
             />
           </ImageListItem>
         ))}
-      </ImageList>
+      </ImageList> */}
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(3, 1fr)",
+        }}
+      >
+        {imagesList.map((image, idx) => (
+          <img
+            key={idx}
+            src={`${image.link}?w=248&fit=crop&auto=format`}
+            srcSet={`${image.link}?w=248&fit=crop&auto=format&dpr=2 2x`}
+            alt="image_item"
+            loading="lazy"
+            className="image-img"
+            onClick={() => setClicked(imagesList[idx])}
+          />
+        ))}
+      </div>
     </InfiniteScroll>
   );
 };

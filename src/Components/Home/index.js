@@ -68,7 +68,7 @@ const Home = () => {
         setVideosList(videos);
         setVideosLoading(false);
 
-        setSearchHistory([...searchHistory, keyword])
+        setSearchHistory([...new Set([...searchHistory, keyword])])
     }
 
     const resetStates = () => {
@@ -77,12 +77,22 @@ const Home = () => {
         setArticlesList([]);
         setImagesList([]);
         setVideosList([]);
+        // setSearchHistory([])
     }
 
     const handleTopicClicked = (topic) => {
         resetStates();
         setKeyword(topic);
         setSelectedTopic(topic);
+
+        if (searchHistory.length > 1) {
+            const index = searchHistory.findIndex(search => search === topic)
+            
+            if (index > -1) {
+                const searchHistoryTemp = searchHistory.splice(index, 1)
+                setSearchHistory([...searchHistoryTemp, topic])
+            }
+        }
     }
 
     React.useEffect(() => {
@@ -130,6 +140,8 @@ const Home = () => {
                 keyword={keyword}
                 setKeyword={setKeyword}
                 handleSearch={handleSearch}
+                searchHistory={searchHistory}
+                handleTopicClicked={handleTopicClicked}
             />
             <Grid
                 container

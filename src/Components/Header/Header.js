@@ -1,10 +1,17 @@
-import { Button } from "@material-ui/core";
+import { Breadcrumbs, Button, Link, Typography } from "@material-ui/core";
 import React from "react";
 import styles from "./header.module.css";
 import { FcSearch } from "react-icons/fc";
 import { useHistory } from "react-router";
 
-function Header({ keyword, setKeyword, handleSearch, title }) {
+function Header({
+  keyword,
+  setKeyword,
+  handleSearch,
+  title,
+  searchHistory,
+  handleTopicClicked,
+}) {
   // const classes = useStyles();
   const history = useHistory();
 
@@ -18,40 +25,59 @@ function Header({ keyword, setKeyword, handleSearch, title }) {
   };
 
   const handleLogoClicked = () => {
-    history.go(0)
-  }
+    history.go(0);
+  };
+
+  console.log(searchHistory);
 
   return (
     <>
       <div className={styles.header}>
-        <img src="/images/image 10.png" alt="cloud9" className={styles.logo} onClick={handleLogoClicked} />
-        {
-          !title ? (
+        <img
+          src="/images/image 10.png"
+          alt="cloud9"
+          className={styles.logo}
+          onClick={handleLogoClicked}
+        />
+        <Breadcrumbs aria-label="breadcrumb">
+          {searchHistory?.map((search) => (
+            <Typography
+              underline="hover"
+              onClick={(e) => handleTopicClicked(e.target.innerText)}
+            >
+              {search}
+            </Typography>
+          ))}
+        </Breadcrumbs>
 
-            <form onSubmit={(e) => handleSubmit(e)}>
-              <div className={styles.searchCover}>
-                <div className={styles.searchContainer}>
-                  <FcSearch size="30px" />
-                  <input
-                    type="search"
-                    className={styles.search}
-                    placeholder="Search for a keyword"
-                    onChange={handleTextChanged}
-                    value={keyword}
-                  />
-                </div>
-
-                <Button variant="contained" type="submit" disabled={keyword === ''}>
-                  Search
-                </Button>
+        {!title ? (
+          <form onSubmit={(e) => handleSubmit(e)}>
+            <div className={styles.searchCover}>
+              <div className={styles.searchContainer}>
+                <FcSearch size="30px" />
+                <input
+                  type="search"
+                  className={styles.search}
+                  placeholder="Search for a keyword"
+                  onChange={handleTextChanged}
+                  value={keyword}
+                />
               </div>
-            </form>
-          ) : (
-            <>
-              <h1 align="center">{title}</h1>
-            </>
-          )
-        }
+
+              <Button
+                variant="contained"
+                type="submit"
+                disabled={keyword === ""}
+              >
+                Search
+              </Button>
+            </div>
+          </form>
+        ) : (
+          <>
+            <h1 align="center">{title}</h1>
+          </>
+        )}
       </div>
     </>
   );

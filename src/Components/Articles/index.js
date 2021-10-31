@@ -11,38 +11,43 @@ const Articles = ({ articlesList, setClicked, loading = false }) => {
   const [articlesIndex, setArticlesIndex] = React.useState(0);
   const [currentArticles, setCurrentArticles] = React.useState([]);
   const fetchMoreData = () => {
-    const concatenation = currentArticles.concat(articlesList.splice(articlesIndex, articlesAtATime));
+    const concatenation = currentArticles.concat(
+      articlesList.splice(articlesIndex, articlesAtATime)
+    );
     setCurrentArticles(concatenation);
     const newArticlesIndex = articlesIndex + articlesAtATime;
     setArticlesIndex(newArticlesIndex);
-  }
+  };
 
   React.useEffect(() => {
-    if (!loading && articlesList.length)
-      fetchMoreData();
+    if (!loading && articlesList.length) fetchMoreData();
     if (loading) {
       setCurrentArticles([]);
       setArticlesIndex(0);
     }
-  }, [loading])
+  }, [loading]);
 
   const renderLoader = () => {
-    return <Box className={classes.progressBox}>
-      <CircularProgress className={classes.progress} />
-    </Box>
-  }
+    return (
+      <Box className={classes.progressBox}>
+        <CircularProgress className={classes.progress} />
+      </Box>
+    );
+  };
   if (!articlesList.length) {
     return (
       <>
-        {loading ? renderLoader() :
-          <><img
-            src="/images/not-found.png"
-            alt="not-found"
-            className="not-found"
-          />
-            <Typography align="center">Nothing to show</Typography>
+        {loading ? (
+          renderLoader()
+        ) : (
+          <>
+            <img
+              src="/images/not-found.png"
+              alt="not-found"
+              className="not-found"
+            />
           </>
-        }
+        )}
       </>
     );
   }
@@ -55,7 +60,10 @@ const Articles = ({ articlesList, setClicked, loading = false }) => {
       // loader={renderLoader()}
       height={700}
     >
-      <Box style={{ height: "100%", paddingRight: "4px" }} className={classes.box}>
+      <Box
+        style={{ height: "100%", paddingRight: "4px" }}
+        className={classes.box}
+      >
         {currentArticles.map((article, idx) => (
           <Article
             key={idx}

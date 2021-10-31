@@ -17,15 +17,22 @@ code {
 }
 
 .not-found {
-  width: 100%;
+  display: block;
+  width: 70%;
+  margin: 3rem auto;
 }
 
-.text-ellipsis{
-  text-overflow:ellipsis;
-  overflow:hidden;
-   /* Addition lines for 2 line or multiline ellipsis */
+.text-ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  /* Addition lines for 2 line or multiline ellipsis */
   display: -webkit-box !important;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   white-space: normal;
+}
+
+.image-img {
+  width: 100%;
+  gap: 10px;
 }

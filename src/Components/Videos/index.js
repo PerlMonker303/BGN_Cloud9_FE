@@ -8,21 +8,26 @@ import InfiniteScroll from "react-infinite-scroll-component";
 const Videos = ({ videosList, setClicked, loading = false }) => {
   const classes = useStyles();
   const renderLoader = () => {
-    return <Box className={classes.progressBox}>
-      <CircularProgress className={classes.progress} />
-    </Box>
-  }
+    return (
+      <Box className={classes.progressBox}>
+        <CircularProgress className={classes.progress} />
+      </Box>
+    );
+  };
   if (!videosList.length) {
     return (
       <>
-        {loading ? renderLoader() : <>
-          <img
-            src="/images/not-found.png"
-            alt="not-found"
-            className="not-found"
-          />
-          <Typography align="center">Nothing to show</Typography>
-        </>}
+        {loading ? (
+          renderLoader()
+        ) : (
+          <>
+            <img
+              src="/images/not-found.png"
+              alt="not-found"
+              className="not-found"
+            />
+          </>
+        )}
       </>
     );
   }
