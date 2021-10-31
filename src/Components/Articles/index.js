@@ -11,8 +11,10 @@ const Articles = ({ articlesList, setClicked, loading = false, isModalArticleOpe
   const [articlesIndex, setArticlesIndex] = React.useState(0);
   const [currentArticles, setCurrentArticles] = React.useState([]);
   const fetchMoreData = () => {
+    // console.log(articlesList);
     const articlesListSliced = articlesList.slice(articlesIndex, articlesIndex + articlesAtATime);
     const concatenation = [...currentArticles, ...articlesListSliced];
+    console.log(concatenation)
     setCurrentArticles(concatenation);
     const newArticlesIndex = articlesIndex + articlesAtATime;
     setArticlesIndex(newArticlesIndex);
@@ -33,10 +35,6 @@ const Articles = ({ articlesList, setClicked, loading = false, isModalArticleOpe
       }
     }
   }, [isModalArticleOpen])
-
-  React.useEffect(() => {
-    console.log(currentArticles);
-  }, [currentArticles])
 
   const renderLoader = () => {
     return (

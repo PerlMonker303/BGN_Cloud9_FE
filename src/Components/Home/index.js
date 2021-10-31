@@ -42,13 +42,15 @@ const Home = () => {
         isInitialPage && setIsInitialPage(false);
         resetStates();
 
+        const keywordCached = JSON.parse(localStorage.getItem(keyword));
+
         handleBreadCrumbsLogic(keyword);
 
         setArticlesLoading(true);
         setImagesLoading(true);
         setVideosLoading(true);
 
-        let desc = await getDescriptionApi(keyword);
+        const desc = keywordCached ? keywordCached.description : await getDescriptionApi(keyword);
         if (desc.length === 0) {
             setDescription('');
         } else {
@@ -57,22 +59,39 @@ const Home = () => {
             }
             setDescription(desc)
         }
-        const relTopics = await getRelatedTopicsApi(keyword);
+        const relTopics = keywordCached ? keywordCached.relatedTopics : await getRelatedTopicsApi(keyword);
         setRelatedTopicsList(relTopics.map((value) => {
             return value.word
         }))
-        const art = await getArticlesApi(keyword);
+        const art = keywordCached ? keywordCached.articles : await getArticlesApi(keyword);
         setArticlesList(art);
-        setArticlesLoading(false);
-        const images = await getImagesApi(keyword);
+        setTimeout(() => setArticlesLoading(false), [1]);
+        const images = keywordCached ? keywordCached.images : await getImagesApi(keyword);
         setImagesList(images);
-        setImagesLoading(false);
-        const videos = await getVideosApi(keyword);
+        setImagesLoading(false)
+        const videos = keywordCached ? keywordCached.videos : await getVideosApi(keyword);
         setVideosList(videos);
-        setVideosLoading(false);
+        setTimeout(() => setVideosLoading(false), [1]);
+
 
         setSearchHistory([...new Set([...searchHistory, keyword])])
+
+        // localstorage
+        if (!localStorage.getItem(keyword)) {
+            const localStorageItem = {
+                description: desc,
+                relatedTopics: relTopics,
+                articles: art,
+                images: images,
+                videos: videos
+            };
+            localStorage.setItem(keyword, JSON.stringify(localStorageItem));
+        }
     }
+
+    React.useEffect(() => {
+        localStorage.clear();
+    }, [])
 
     const resetStates = () => {
         setDescription('');
@@ -192,7 +211,12 @@ const Home = () => {
 
                     <CustomContainer isHidden={isInitialPage}>
                         <Typography variant="h6">Articles</Typography>
-                        <Articles articlesList={articlesList} setClicked={handleArticleClicked} loading={articlesLoading} isModalArticleOpen={isModalArticleOpen} />
+                        <Articles
+                            articlesList={articlesList}
+                            setClicked={handleArticleClicked}
+                            loading={articlesLoading}
+                            isModalArticleOpen={isModalArticleOpen}
+                        />
                     </CustomContainer>
                 </Grid>
 

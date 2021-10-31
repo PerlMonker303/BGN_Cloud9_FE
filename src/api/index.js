@@ -42,4 +42,5 @@ export const getImagesApi = (keyword) => {
   return axiosInstance.get(`images/${keyword}`).then((res) => {
     return res.data;
   });
+  // return [];
 };
