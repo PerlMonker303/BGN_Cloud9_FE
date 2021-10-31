@@ -23,18 +23,18 @@ export const getDescriptionApi = async (keyword) => {
 };
 
 export const getPlaylistApi = async (keyword) => {
-  let playlistId = await axiosInstance.get(`videos/${keyword}`).then((res) => {
+  return axiosInstance.get(`videos/${keyword}`).then((res) => {
     return res.data;
   });
-  if (!playlistId.length) return [];
-  playlistId = playlistId[0].link;
-  return axiosInstance
-    .get(
-      `${YOUTUBE_PLAYLIST_ITEMS_API}?part=snippet&playlistId=${playlistId}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`
-    )
-    .then((res) => {
-      return res.data.items;
-    });
+  // if (!playlistId.length) return [];
+  // playlistId = playlistId[0].link;
+  // return axiosInstance
+  //   .get(
+  //     `${YOUTUBE_PLAYLIST_ITEMS_API}?part=snippet&playlistId=${playlistId}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`
+  //   )
+  //   .then((res) => {
+  //     return res.data.items;
+  //   });
 };
 
 export const getRelatedTopicsApi = async (keyword) => {

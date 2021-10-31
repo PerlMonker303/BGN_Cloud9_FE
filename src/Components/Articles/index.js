@@ -11,9 +11,8 @@ const Articles = ({ articlesList, setClicked, loading = false }) => {
   const [articlesIndex, setArticlesIndex] = React.useState(0);
   const [currentArticles, setCurrentArticles] = React.useState([]);
   const fetchMoreData = () => {
-    const concatenation = currentArticles.concat(
-      articlesList.splice(articlesIndex, articlesAtATime)
-    );
+    const articlesListSliced = articlesList.slice(articlesIndex, articlesIndex + articlesAtATime);
+    const concatenation = [...currentArticles, ...articlesListSliced];
     setCurrentArticles(concatenation);
     const newArticlesIndex = articlesIndex + articlesAtATime;
     setArticlesIndex(newArticlesIndex);
@@ -22,8 +21,8 @@ const Articles = ({ articlesList, setClicked, loading = false }) => {
   React.useEffect(() => {
     if (!loading && articlesList.length) fetchMoreData();
     if (loading) {
-      setCurrentArticles([]);
       setArticlesIndex(0);
+      setCurrentArticles([]);
     }
   }, [loading]);
 
@@ -54,10 +53,9 @@ const Articles = ({ articlesList, setClicked, loading = false }) => {
 
   return (
     <InfiniteScroll
-      dataLength={articlesIndex}
+      dataLength={currentArticles.length}
       next={fetchMoreData}
       hasMore={articlesIndex < articlesList.length}
-      // loader={renderLoader()}
       height={700}
     >
       <Box
