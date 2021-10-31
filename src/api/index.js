@@ -23,11 +23,9 @@ export const getDescriptionApi = async (keyword) => {
 };
 
 export const getVideosApi = async (keyword) => {
-  // return axiosInstance.get(`videos/${keyword}`).then((res) => {
-  //   return res.data;
-  // });
-
-  return [];
+  return axiosInstance.get(`videos/${keyword}`).then((res) => {
+    return res.data;
+  });
 };
 
 export const getRelatedTopicsApi = async (keyword) => {
