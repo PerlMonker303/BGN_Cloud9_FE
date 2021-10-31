@@ -5,7 +5,7 @@
     rgba(239, 164, 189, 0.86) 98.54%,
     rgba(239, 164, 189, 0.062559) 106.37%
   );
-  padding: 1.5rem;
+  padding: 0.8rem;
   width: 100%;
 }
 
@@ -42,4 +42,12 @@
   /* border-radius: 20px; */
   overflow: hidden;
   /* max-width: 40rem; */
+}
+
+.breadCrumb {
+  cursor: pointer;
+}
+
+.breadCrumb:hover {
+  text-decoration: underline;
 }

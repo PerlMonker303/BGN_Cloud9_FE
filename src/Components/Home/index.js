@@ -17,6 +17,7 @@ import { startsWithCapital, capitalizeFirstLetter } from '../../utils';
 
 const Home = () => {
     const classes = useStyles();
+    const maximumBreadCumbs = 4;
     const [keyword, setKeyword] = useState("");
     const [description, setDescription] = useState('');
     const [relatedTopicsList, setRelatedTopicsList] = useState([]);
@@ -77,7 +78,6 @@ const Home = () => {
         setArticlesList([]);
         setImagesList([]);
         setVideosList([]);
-        // setSearchHistory([])
     }
 
     const handleTopicClicked = (topic) => {
@@ -85,14 +85,21 @@ const Home = () => {
         setKeyword(topic);
         setSelectedTopic(topic);
 
-        if (searchHistory.length > 1) {
-            const index = searchHistory.findIndex(search => search === topic)
-            
+        let searchHistoryTemp = searchHistory;
+        if (searchHistoryTemp.length > 1) {
+            const index = searchHistoryTemp.findIndex(search => search === topic)
             if (index > -1) {
-                const searchHistoryTemp = searchHistory.splice(index, 1)
-                setSearchHistory([...searchHistoryTemp, topic])
+                searchHistoryTemp.splice(index, 1)
+                searchHistoryTemp = [...searchHistoryTemp, topic]
             }
+
+            if (searchHistoryTemp.length > maximumBreadCumbs) {
+                searchHistoryTemp.shift();
+            }
+
+            setSearchHistory(searchHistoryTemp)
         }
+
     }
 
     React.useEffect(() => {

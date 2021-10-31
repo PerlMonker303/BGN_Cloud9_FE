@@ -28,8 +28,6 @@ function Header({
     history.go(0);
   };
 
-  console.log(searchHistory);
-
   return (
     <>
       <div className={styles.header}>
@@ -39,16 +37,7 @@ function Header({
           className={styles.logo}
           onClick={handleLogoClicked}
         />
-        <Breadcrumbs aria-label="breadcrumb">
-          {searchHistory?.map((search) => (
-            <Typography
-              underline="hover"
-              onClick={(e) => handleTopicClicked(e.target.innerText)}
-            >
-              {search}
-            </Typography>
-          ))}
-        </Breadcrumbs>
+
 
         {!title ? (
           <form onSubmit={(e) => handleSubmit(e)}>
@@ -78,6 +67,19 @@ function Header({
             <h1 align="center">{title}</h1>
           </>
         )}
+
+        <Breadcrumbs aria-label="breadcrumb">
+          {searchHistory?.slice(0, -1).map((search) => (
+            <Typography
+              className={styles.breadCrumb}
+              key={search}
+              underline="hover"
+              onClick={(e) => handleTopicClicked(e.target.innerText)}
+            >
+              {search}
+            </Typography>
+          ))}
+        </Breadcrumbs>
       </div>
     </>
   );
