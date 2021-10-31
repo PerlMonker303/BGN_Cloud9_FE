@@ -37,7 +37,10 @@ const Home = () => {
         const desc = await getDescriptionApi(keyword);
         desc.length ? setDescription(desc[0].description) : setDescription('');
         const relTopics = await getRelatedTopicsApi(keyword);
-        setRelatedTopicsList(relTopics);
+        console.log(relTopics)
+        setRelatedTopicsList(relTopics.map((value) => {
+            return value.word
+        }))
         const art = await getArticlesApi(keyword);
         setArticlesList(art);
         const images = await getImagesApi(keyword);

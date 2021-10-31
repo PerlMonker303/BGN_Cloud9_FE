@@ -16,12 +16,6 @@ const Article = ({ article, idx, setClicked }) => {
       <Typography className={`${classes.description} text-ellipsis`}>
         {article.description}
       </Typography>
-      {/* This line is meant to be removed */}
-      <Typography className={`${classes.description} text-ellipsis`}>
-        Just some sample text to showcase the ellipsis. Just some sample text to
-        showcase the ellipsis. Just some sample text to showcase the ellipsis.
-        Just some sample text to showcase the ellipsis.
-      </Typography>
     </Box>
   );
 };

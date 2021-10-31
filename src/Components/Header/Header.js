@@ -3,7 +3,7 @@ import React from "react";
 import styles from "./header.module.css";
 import { FcSearch } from "react-icons/fc";
 
-function Header({ keyword, setKeyword, handleSearch }) {
+function Header({ keyword, setKeyword, handleSearch, title }) {
   // const classes = useStyles();
 
   const handleTextChanged = (e) => {
@@ -16,8 +16,12 @@ function Header({ keyword, setKeyword, handleSearch }) {
   };
 
   return (
+    <>
     <div className={styles.header}>
       <img src="/images/image 10.png" alt="cloud9" className={styles.logo} />
+    {
+      !title ? (
+
       <form onSubmit={(e) => handleSubmit(e)}>
         <div className={styles.searchCover}>
           <div className={styles.searchContainer}>
@@ -36,7 +40,14 @@ function Header({ keyword, setKeyword, handleSearch }) {
           </Button>
         </div>
       </form>
+      ) : (
+        <>
+          <h1 align="center">{title}</h1>
+        </>
+      )
+    }
     </div>
+    </>
   );
 }
 

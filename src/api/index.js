@@ -32,13 +32,26 @@ export const getPlaylistApi = async (keyword) => {
     });
 };
 
-export const getRelatedTopicsApi = (keyword) => {
-  return ["Photosynthesis", "Topic 2", "Topic 3"];
+export const getRelatedTopicsApi = async (keyword) => {
+  // return ["Photosynthesis", "Topic 2", "Topic 3"];
   // todo
   // return axiosInstance.get(`tbd?keyword=${keyword}`)
   // .then(res => {
   //   return res;
   // });
+
+  let relatedWords = await fetch(
+    `https://api.datamuse.com/words?rel_trg=${keyword}&max=4`
+  );
+  let data = await relatedWords.json();
+  return data;
+
+  // .then((res) => res.json())
+  // .then((data) =>
+  //   data.map(function (value) {
+  //     return console.log(value.word);
+  //   })
+  // );
 };
 
 export const getArticlesApi = (keyword) => {
