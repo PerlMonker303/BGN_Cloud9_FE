@@ -7,6 +7,29 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 const Articles = ({ articlesList, setClicked, loading = false }) => {
   const classes = useStyles();
+  const articlesAtATime = 10;
+  const [articlesIndex, setArticlesIndex] = React.useState(0);
+  const [currentArticles, setCurrentArticles] = React.useState([]);
+  const fetchMoreData = () => {
+    const concatenation = currentArticles.concat(articlesList.splice(articlesIndex, articlesAtATime));
+    setCurrentArticles(concatenation);
+    const newArticlesIndex = articlesIndex + articlesAtATime;
+    setArticlesIndex(newArticlesIndex);
+  }
+
+  React.useEffect(() => {
+    if (!loading && articlesList.length)
+      fetchMoreData();
+    if (loading) {
+      setCurrentArticles([]);
+      setArticlesIndex(0);
+    }
+  }, [loading])
+
+  React.useEffect(() => {
+    console.log(currentArticles);
+  }, [currentArticles])
+
   const renderLoader = () => {
     return <Box className={classes.progressBox}>
       <CircularProgress className={classes.progress} />
@@ -30,19 +53,19 @@ const Articles = ({ articlesList, setClicked, loading = false }) => {
 
   return (
     <InfiniteScroll
-      dataLength={articlesList.length}
-      // next={this.fetchMoreData}
-      // hasMore={this.state.hasMore}
-      loader={renderLoader()}
+      dataLength={articlesIndex}
+      next={fetchMoreData}
+      hasMore={articlesIndex < articlesList.length}
+      // loader={renderLoader()}
       height={700}
     >
       <Box style={{ height: "100%", paddingRight: "4px" }} className={classes.box}>
-        {articlesList.map((article, idx) => (
+        {currentArticles.map((article, idx) => (
           <Article
             key={idx}
             article={article}
             idx={idx}
-            setClicked={() => setClicked(articlesList[idx])}
+            setClicked={() => setClicked(currentArticles[idx])}
           />
         ))}
       </Box>

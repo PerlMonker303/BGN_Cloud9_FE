@@ -34,9 +34,11 @@ const Home = () => {
     const [articlesLoading, setArticlesLoading] = useState(false);
     const [imagesLoading, setImagesLoading] = useState(false);
     const [videosLoading, setVideosLoading] = useState(false);
+    const [searchHistory, setSearchHistory] = useState([]);
 
     const handleSearch = async () => {
-        setIsInitialPage(false);
+        isInitialPage && setIsInitialPage(false);
+        resetStates();
 
         setArticlesLoading(true);
         setImagesLoading(true);
@@ -57,14 +59,20 @@ const Home = () => {
         const videos = await getPlaylistApi(keyword);
         setVideosList(videos);
         setVideosLoading(false);
+
+        setSearchHistory([...searchHistory, keyword])
     }
 
-    const handleTopicClicked = (topic) => {
+    const resetStates = () => {
         setDescription('');
         setRelatedTopicsList([]);
         setArticlesList([]);
         setImagesList([]);
         setVideosList([]);
+    }
+
+    const handleTopicClicked = (topic) => {
+        resetStates();
         setKeyword(topic);
         setSelectedTopic(topic);
     }
@@ -74,6 +82,10 @@ const Home = () => {
             handleSearch();
         }
     }, [selectedTopic])
+
+    React.useEffect(() => {
+        console.log(searchHistory);
+    }, [searchHistory])
 
     const handleArticleClicked = (article) => {
         setSelectedArticle(article)

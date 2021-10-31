@@ -15,8 +15,6 @@ export const getDescriptionApi = async (keyword) => {
   if (!data.length) {
     return []
   }
-  console.log(data);
-  console.log(data[0].meanings[0].definitions[0].definition);
   return data[0].meanings[0].definitions[0].definition
   // return axiosInstance.get(`paragraphs/${keyword}`).then((res) => {
   //   return res.data;
