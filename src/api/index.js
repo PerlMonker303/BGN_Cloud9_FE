@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "https://bgncloud9bk.herokuapp.com/",
+  baseURL: "https://bgncloud9bk.herokuapp.com/"
 });
 const YOUTUBE_PLAYLIST_ITEMS_API =
   "https://www.googleapis.com/youtube/v3/playlistItems";
@@ -59,93 +59,16 @@ export const getRelatedTopicsApi = async (keyword) => {
 };
 
 export const getArticlesApi = (keyword) => {
-  const articles = [
-    {
-      title: "What Is Photosynthesis? | Live Science",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam eget amet nunc urna ornare convallis mi netus...",
-      link: "https://arxiv.org/pdf/2104.07079.pdf",
-    },
-    {
-      title: "What Is Photosynthesis? | Live Science",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam eget amet nunc urna ornare convallis mi netus...",
-      link: "https://arxiv.org/pdf/2104.07079.pdf",
-    },
-    {
-      title: "What Is Photosynthesis? | Live Science",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam eget amet nunc urna ornare convallis mi netus...",
-      link: "https://arxiv.org/pdf/2104.07079.pdf",
-    },
-    {
-      title: "What Is Photosynthesis? | Live Science",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam eget amet nunc urna ornare convallis mi netus...",
-      link: "https://arxiv.org/pdf/2104.07079.pdf",
-    },
-    {
-      title: "What Is Photosynthesis? | Live Science",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam eget amet nunc urna ornare convallis mi netus...",
-      link: "https://arxiv.org/pdf/2104.07079.pdf",
-    },
-    {
-      title: "What Is Photosynthesis? | Live Science",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam eget amet nunc urna ornare convallis mi netus...",
-      link: "https://arxiv.org/pdf/2104.07079.pdf",
-    },
-    {
-      title: "What Is Photosynthesis? | Live Science",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam eget amet nunc urna ornare convallis mi netus...",
-      link: "https://arxiv.org/pdf/2104.07079.pdf",
-    },
-    {
-      title: "What Is Photosynthesis? | Live Science",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Diam eget amet nunc urna ornare convallis mi netus...",
-      link: "https://arxiv.org/pdf/2104.07079.pdf",
-    },
-  ];
-  //return articles;
   return axiosInstance.get(`articles/${keyword}`).then((res) => {
     return res.data;
   });
 };
 
 export const getImagesApi = (keyword) => {
-  const images = [
-    {
-      link: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Photosynthesis_en.svg/220px-Photosynthesis_en.svg.png",
-    },
-    {
-      link: "https://www.science-sparks.com/wp-content/uploads/2020/04/Photosynthesis-Diagram-1024x759.jpg",
-    },
-    {
-      link: "https://cdn.kastatic.org/googleusercontent/UjsfRK1x93NkUnspJDAovnpUXS0HmRcvBKZFTnBMogdljYiGV-twlFjxruOWflqxDAxUbUx2qYQoj8pfBUXY76izaA",
-    },
-    {
-      link: "https://cdn.kastatic.org/googleusercontent/UjsfRK1x93NkUnspJDAovnpUXS0HmRcvBKZFTnBMogdljYiGV-twlFjxruOWflqxDAxUbUx2qYQoj8pfBUXY76izaA",
-    },
-    {
-      link: "https://www.science-sparks.com/wp-content/uploads/2020/04/Photosynthesis-Diagram-1024x759.jpg",
-    },
-    {
-      link: "https://cdn.kastatic.org/googleusercontent/UjsfRK1x93NkUnspJDAovnpUXS0HmRcvBKZFTnBMogdljYiGV-twlFjxruOWflqxDAxUbUx2qYQoj8pfBUXY76izaA",
-    },
-    {
-      link: "https://cdn.kastatic.org/googleusercontent/UjsfRK1x93NkUnspJDAovnpUXS0HmRcvBKZFTnBMogdljYiGV-twlFjxruOWflqxDAxUbUx2qYQoj8pfBUXY76izaA",
-    },
-    {
-      link: "https://www.science-sparks.com/wp-content/uploads/2020/04/Photosynthesis-Diagram-1024x759.jpg",
-    },
-    {
-      link: "https://cdn.kastatic.org/googleusercontent/UjsfRK1x93NkUnspJDAovnpUXS0HmRcvBKZFTnBMogdljYiGV-twlFjxruOWflqxDAxUbUx2qYQoj8pfBUXY76izaA",
-    },
-  ];
-  //return images;
+  const apiKey = 'AIzaSyDi5NqKuvZaFw2TPyhPGDGZC6o59Mp99Gc';
+  const cx = 'dd7b9ed7ab5bbcd14';
+
+  // data comes as [{link, thumbnail}]
   return axiosInstance.get(`images/${keyword}`).then((res) => {
     return res.data;
   });
