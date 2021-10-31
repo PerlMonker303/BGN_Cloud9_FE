@@ -32,12 +32,15 @@ const Home = () => {
     const [isVideoLoading, setIsVideoLoading] = useState(false);
     const [isInitialPage, setIsInitialPage] = useState(true);
     const [articlesLoading, setArticlesLoading] = useState(false);
+    const [imagesLoading, setImagesLoading] = useState(false);
+    const [videosLoading, setVideosLoading] = useState(false);
 
     const handleSearch = async () => {
         setIsInitialPage(false);
 
         setArticlesLoading(true);
-
+        setImagesLoading(true);
+        setVideosLoading(true);
 
         const desc = await getDescriptionApi(keyword);
         desc.length ? setDescription(desc[0].description) : setDescription('');
@@ -48,11 +51,13 @@ const Home = () => {
         }))
         const art = await getArticlesApi(keyword);
         setArticlesList(art);
-        setArticlesLoading(true);
+        setArticlesLoading(false);
         const images = await getImagesApi(keyword);
         setImagesList(images);
+        setImagesLoading(false);
         const videos = await getPlaylistApi(keyword);
         setVideosList(videos);
+        setVideosLoading(false);
     }
 
     const handleTopicClicked = (topic) => {
@@ -74,11 +79,13 @@ const Home = () => {
     const handleArticleClicked = (article) => {
         setSelectedArticle(article)
         setIsModalArticleOpen(true);
+        setArticlesLoading(true);
     }
 
     const handleImageClicked = (image) => {
         setSelectedImage(image)
         setIsModalImageOpen(true);
+        setImagesLoading(true);
     }
 
     const handleVideoClicked = (video) => {
@@ -134,7 +141,7 @@ const Home = () => {
 
                     <CustomContainer isHidden={isInitialPage}>
                         <Typography variant="h6">Images</Typography>
-                        <Images imagesList={imagesList} setClicked={handleImageClicked} />
+                        <Images imagesList={imagesList} setClicked={handleImageClicked} loading={imagesLoading} />
                     </CustomContainer>
                 </Grid>
 
@@ -151,7 +158,7 @@ const Home = () => {
 
                     <CustomContainer isHidden={isInitialPage}>
                         <Typography variant="h6" >Videos</Typography>
-                        <Videos videosList={videosList} setClicked={handleVideoClicked} />
+                        <Videos videosList={videosList} setClicked={handleVideoClicked} loading={videosLoading} />
                     </CustomContainer>
                 </Grid>
 

@@ -1,20 +1,26 @@
 import React from "react";
 
 import { useStyles } from "./styles";
-import { ImageList, ImageListItem, Typography } from "@material-ui/core";
+import { CircularProgress, ImageList, ImageListItem, Typography } from "@material-ui/core";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { Box } from "@mui/system";
 
-const Images = ({ imagesList, setClicked }) => {
+const Images = ({ imagesList, setClicked, loading = false }) => {
   const classes = useStyles();
+  const renderLoader = () => {
+    return <Box className={classes.progressBox}>
+      <CircularProgress className={classes.progress} />
+    </Box>
+  }
   if (!imagesList.length) {
     return (
       <>
-        <img
+        {loading ? renderLoader() : <><img
           src="/images/not-found.png"
           alt="not-found"
           className="not-found"
         />
-        <Typography align="center">Nothing to show</Typography>
+          <Typography align="center">Nothing to show</Typography></>}
       </>
     );
   }

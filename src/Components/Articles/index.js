@@ -8,18 +8,22 @@ import InfiniteScroll from "react-infinite-scroll-component";
 const Articles = ({ articlesList, setClicked, loading = false }) => {
   const classes = useStyles();
   const renderLoader = () => {
-    return <CircularProgress className={classes.progress} />
+    return <Box className={classes.progressBox}>
+      <CircularProgress className={classes.progress} />
+    </Box>
   }
-  // loading && !articlesList.length && renderLoader();
   if (!articlesList.length) {
     return (
       <>
-        <img
-          src="/images/not-found.png"
-          alt="not-found"
-          className="not-found"
-        />
-        <Typography align="center">Nothing to show</Typography>
+        {loading ? renderLoader() :
+          <><img
+            src="/images/not-found.png"
+            alt="not-found"
+            className="not-found"
+          />
+            <Typography align="center">Nothing to show</Typography>
+          </>
+        }
       </>
     );
   }
