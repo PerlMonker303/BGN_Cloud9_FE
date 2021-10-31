@@ -41,8 +41,8 @@ const Images = ({ imagesList, setClicked, loading = false }) => {
         {imagesList.map((image, idx) => (
           <ImageListItem key={idx}>
             <img
-              src={`${image.link}?w=248&fit=crop&auto=format`}
-              srcSet={`${image.link}?w=248&fit=crop&auto=format&dpr=2 2x`}
+              src={`${image.thumbnail}?w=248&fit=crop&auto=format`}
+              srcSet={`${image.thumbnail}?w=248&fit=crop&auto=format&dpr=2 2x`}
               alt="image_item"
               loading="lazy"
               onClick={() => setClicked(imagesList[idx])}
