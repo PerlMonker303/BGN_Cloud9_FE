@@ -43,9 +43,8 @@ const Home = () => {
         setVideosLoading(true);
 
         const desc = await getDescriptionApi(keyword);
-        desc.length ? setDescription(desc[0].description) : setDescription('');
+        desc.length ? setDescription(desc) : setDescription('');
         const relTopics = await getRelatedTopicsApi(keyword);
-        console.log(relTopics)
         setRelatedTopicsList(relTopics.map((value) => {
             return value.word
         }))

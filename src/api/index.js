@@ -6,23 +6,29 @@ const axiosInstance = axios.create({
 const YOUTUBE_PLAYLIST_ITEMS_API =
   "https://www.googleapis.com/youtube/v3/playlistItems";
 
-export const getDescriptionApi = (keyword) => {
-  // // todo
+export const getDescriptionApi = async (keyword) => {
   //return [{ description: "Photosynthesis is the process by which plants use sunlight, water, and carbon dioxide to create oxygen and energy in the form of sugar." }];
-  return axiosInstance.get(`paragraphs/${keyword}`).then((res) => {
-    return res.data;
-  });
+  let relatedWords = await fetch(
+    `https://api.dictionaryapi.dev/api/v2/entries/en/${keyword}`
+  );
+  let data = await relatedWords.json();
+  if (!data.length) {
+    return []
+  }
+  console.log(data);
+  console.log(data[0].meanings[0].definitions[0].definition);
+  return data[0].meanings[0].definitions[0].definition
+  // return axiosInstance.get(`paragraphs/${keyword}`).then((res) => {
+  //   return res.data;
+  // });
 };
 
 export const getPlaylistApi = async (keyword) => {
-  // todo: request playlist url from the backend
-
   let playlistId = await axiosInstance.get(`videos/${keyword}`).then((res) => {
     return res.data;
   });
   if (!playlistId.length) return [];
   playlistId = playlistId[0].link;
-  //const playlistId = "PLAE36CEFE9200FDDD";
   return axiosInstance
     .get(
       `${YOUTUBE_PLAYLIST_ITEMS_API}?part=snippet&playlistId=${playlistId}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`
@@ -34,7 +40,6 @@ export const getPlaylistApi = async (keyword) => {
 
 export const getRelatedTopicsApi = async (keyword) => {
   // return ["Photosynthesis", "Topic 2", "Topic 3"];
-  // todo
   // return axiosInstance.get(`tbd?keyword=${keyword}`)
   // .then(res => {
   //   return res;
