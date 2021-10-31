@@ -1,8 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  // baseURL: "https://bgncloud9bk.herokuapp.com/",
-  baseURL: "http://localhost:5000/",
+  baseURL: "https://bgncloud9bk.herokuapp.com/"
 });
 const YOUTUBE_PLAYLIST_ITEMS_API =
   "https://www.googleapis.com/youtube/v3/playlistItems";
