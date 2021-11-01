@@ -235,7 +235,7 @@ const Home = () => {
                 {selectedArticle && renderPDF(selectedArticle.link)}
             </CustomModal>
             <CustomModal isOpen={isModalVideoOpen} setIsOpen={setIsModalVideoOpen} isLoading={isVideoLoading} resizeAsChild>
-                {selectedVideo && <YouTube videoId={selectedVideo.snippet.resourceId.videoId} opts={videoOptions} onReady={() => setIsVideoLoading(false)} />}
+                {selectedVideo && <YouTube videoId={selectedVideo.id} opts={videoOptions} onReady={() => setIsVideoLoading(false)} />}
             </CustomModal>
             <CustomModal isOpen={isModalImageOpen} setIsOpen={setIsModalImageOpen} resizeAsChild>
                 {selectedImage && <Image image={selectedImage} width={'550'} />}
