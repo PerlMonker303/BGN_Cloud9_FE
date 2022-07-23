@@ -7,4 +7,4 @@
 
 
 # Deployed app
-- https://bgn-hack21-7020.appspot.com
+- https://bgn-cloud9-fe.herokuapp.com/
